@@ -202,17 +202,17 @@ def is_float(s):
 def custom_ask_question(value):
     q = f'может ли наименование единицы измерения быть: {value}?'
     try:
+        print(f'user_q ->  {q}')
         response = ask_question(q)
+        print(f'bot_res: {response}')
         if value.lower() == 'штука':
             return True, None
-        print(f'bot_res: {response}')
         if len(response) >= 3:
             if response[:3].lower() == 'нет':
                 return False, response
     except:
         return True, None
     return True, None
-
 
 
 def operations(buffer):
@@ -231,11 +231,14 @@ def operations(buffer):
                 buf_13 = str(buffer[13][buffer_index])
             except:
                 continue
-            # print(f'buf_7_neuro={buf_7_neuro}')
+            print(f'buf_7_neuro={buf_7_neuro}')
 
-            bot_res, text_bot_res = custom_ask_question(buf_7_neuro.lower())
+            bot_res, text_bot_res = custom_ask_question(buf_7_neuro)
             if not bot_res:
-                e = f'Ошибка в наименовании ед. из.: {text_bot_res}'
+                # e = f'Ошибка в наименовании ед. из.: {text_bot_res}'
+                e = f'Ошибка в наименовании единицы измерения: {buf_7_neuro}'
+                e += '\n. '
+                e += f'Ответ яыковой модели: {text_bot_res}'
                 print(e)
                 errors.append(e)
 
